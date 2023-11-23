@@ -6,14 +6,13 @@
     <title>Пользователи</title>
 </head>
 <body style="background-color: #d1d1d1">
+<div align="center"><ul class="menu-bar">
+    <li>admin</li>
+    <li><a th:href="@{/admin/new}">Добавить пользователя</a></li>
+    <li><a th:href="@{/logout}">Выйти</a></li>
+</ul></div>
 <div align="center">
-    <ul class="menu-bar">
-        <li>guest</li>
-        <li><a th:href="@{/logout}">Выйти</a></li>
-    </ul>
-</div>
-<div align="center">
-    <h1>Ваши данные</h1>
+    <h1>Все пользователи</h1>
     <table cellpadding="15">
         <tr style="background: grey">
             <th>id</th>
@@ -21,17 +20,20 @@
             <th>Фамилия</th>
             <th>Год рождения</th>
             <th>Роли</th>
-            <th>bCrypt пароль</th>
+            <th>Действие</th>
         </tr>
-        <tr th:object="${user}">
+        <tr th:each="user: ${allUsers}">
             <td th:text=${user.id}/>
             <td th:text=${user.username}/>
             <td th:text=${user.lastName}/>
             <td th:text=${user.year}/>
             <td>
-                <div th:each="role: ${user.roles}" th:text=${role.name}/>
+        <div th:each="role: ${user.roles}" th:text=${role.name}/>
+        </td>
+            <td>
+                <a style="color: grey" th:href="@{/admin/update(id=${user.id})}">Изменить</a>
+                <a style="color: darkred" th:href="@{/admin/delete(id=${user.id})}">Удалить</a>
             </td>
-            <td th:text=${user.password}/>
         </tr>
     </table>
 </div>
@@ -64,7 +66,6 @@
         padding: 0px 5px;
         margin: 5%;
     }
-
     .menu-bar li {
 
         list-style: none;
@@ -77,7 +78,6 @@
         cursor: pointer;
         white-space: nowrap;
     }
-
     .menu-bar li::before {
         content: " ";
         position: absolute;
@@ -89,11 +89,9 @@
         transition: 0.2s;
         border-radius: 25px;
     }
-
     .menu-bar li:hover {
         color: black;
     }
-
     .menu-bar li:hover::before {
         background: linear-gradient(to bottom, #e8edec, #d2d1d3);
         box-shadow: 0px 3px 20px 0px black;
