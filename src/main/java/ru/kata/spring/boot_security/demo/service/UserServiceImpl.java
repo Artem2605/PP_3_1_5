@@ -39,41 +39,33 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public User findByUsername(String username) {
         return USER_REPOSITORY.findByUsername(username);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<User> getListOfUsers() {
         return USER_REPOSITORY.findAll();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public User getUserById(Long id) {
-        return USER_REPOSITORY.findById(id).orElse(null);
+        return USER_REPOSITORY.getOne(id);
     }
 
     @Override
     @Transactional
-    public boolean saveUser(User user) {
-        User checkUser = USER_REPOSITORY.findByUsername(user.getUsername());
-        if (checkUser == null) {
-            user.setPassword(PASSWORD_ENCODER.encode(user.getPassword()));
-            USER_REPOSITORY.save(user);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    @Transactional
-    public void updateUser(User user) {
+    public void saveUser(User user) {
         user.setPassword(PASSWORD_ENCODER.encode(user.getPassword()));
         USER_REPOSITORY.save(user);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        saveUser(user);
     }
 
     @Override

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,43 +13,18 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 import javax.validation.Valid;
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 @Controller
-public class MainController {
+public class AdminController {
 
     private final UserServiceImpl USER_SERVICE_IMPL;
     private final RoleServiceImpl ROLE_SERVICE_IMPL;
 
     @Autowired
-    public MainController(UserServiceImpl userServiceImpl, RoleServiceImpl roleServiceImpl) {
+    public AdminController(UserServiceImpl userServiceImpl, RoleServiceImpl roleServiceImpl) {
         this.USER_SERVICE_IMPL = userServiceImpl;
         this.ROLE_SERVICE_IMPL = roleServiceImpl;
-    }
-
-    @GetMapping("/")
-    public String goHomePage() {
-        return "home";
-    }
-
-    @PostMapping("/registry") //Первичная регистрация admin
-    public String createAdminUser() {
-        Role role1 = new Role("ROLE_ADMIN");
-        Role role2 = new Role("ROLE_USER");
-        List<Role> roles = new ArrayList<>() {
-            {
-                add(role1);
-                add(role2);
-            }
-        };
-        ROLE_SERVICE_IMPL.saveRole(role1);
-        ROLE_SERVICE_IMPL.saveRole(role2);
-        User user = new User("admin", "admin", "admin", Long.valueOf("777"), roles);
-        USER_SERVICE_IMPL.saveUser(user);
-        return "redirect:/login";
     }
 
     @GetMapping("/admin")
@@ -73,12 +47,7 @@ public class MainController {
             return "new";
         } else {
             ROLE_SERVICE_IMPL.saveRole(user.getRoles().get(0));
-            if (!USER_SERVICE_IMPL.saveUser(user)) {
-                FieldError usernameError = new FieldError("user", "username",
-                        "Данное имя занято");
-                bindingResult.addError(usernameError);
-                return "new";
-            }
+            USER_SERVICE_IMPL.saveUser(user);
             return "redirect:/admin";
         }
     }
@@ -115,11 +84,5 @@ public class MainController {
     public String deleteUser(@ModelAttribute("user") User user) {
         USER_SERVICE_IMPL.deleteUserById(user.getId());
         return "redirect:/admin";
-    }
-
-    @GetMapping("/user")
-    public String goUserPage(Principal principal, Model model) {
-        model.addAttribute("user", USER_SERVICE_IMPL.findByUsername(principal.getName()));
-        return "user";
     }
 }

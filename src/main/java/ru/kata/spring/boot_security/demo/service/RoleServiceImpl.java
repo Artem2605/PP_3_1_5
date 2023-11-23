@@ -18,15 +18,15 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Role> getListOfRoles() {
         return ROLE_REPOSITORY.findAll();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Role getRoleById(Long id) {
-        return ROLE_REPOSITORY.findById(id).orElse(null);
+        return ROLE_REPOSITORY.getOne(id);
     }
 
     @Override
