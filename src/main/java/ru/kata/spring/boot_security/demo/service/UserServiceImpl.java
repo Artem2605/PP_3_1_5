@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
         if (user == null) {
@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
         saveUser(user);
     }
