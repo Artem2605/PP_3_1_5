@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -19,23 +20,27 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", unique = true)
+    @Column(name = "firstName", unique = true)
     @Pattern(regexp = "[A-Za-zА-Яа-яЁё]+", message = "Неверно указано имя")
-    private String username;
+    private String firstName;
 
     @Column(name = "lastName")
     @Pattern(regexp = "[A-Za-zА-Яа-яЁё]+", message = "Неверно указана фамилия")
     private String lastName;
 
+    @Column(name = "username")
+    @Email(message = "Неверно указана почта")
+    private String username;
+
     @Column(name = "password")
     @NotEmpty(message = "Неверно указан пароль")
     private String password;
 
-    @Column(name = "year")
+    @Column(name = "age")
     @Min(value = 0, message = "Неверно указан год")
     @Max(value = 2023, message = "Неверно указан год")
     @NotNull(message = "Неверно указан год")
-    private Long year;
+    private Long age;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
@@ -46,11 +51,12 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String lastName, String password, Long year, List<Role> roles) {
+    public User(String username, String firstName, String lastName, String password, Long age, List<Role> roles) {
         this.username = username;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
-        this.year = year;
+        this.age = age;
         this.roles = roles;
     }
 
@@ -71,6 +77,22 @@ public class User implements UserDetails {
         this.username = username;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Long getAge() {
+        return age;
+    }
+
+    public void setAge(Long age) {
+        this.age = age;
+    }
+
     public String getLastName() {
         return lastName;
     }
@@ -86,14 +108,6 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Long getYear() {
-        return year;
-    }
-
-    public void setYear(Long year) {
-        this.year = year;
     }
 
     public List<Role> getRoles() {
@@ -132,12 +146,13 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User{" +
-                "id = " + id +
-                ", username = " + username + "\\" +
-                ", lastName = " + lastName + "\\" +
-                ", password = " + password + "\\" +
-                ", year = " + year +
-                ", roles = " + roles +
+                "id=" + id +
+                ", firstName=" + firstName + "\\" +
+                ", lastName=" + lastName + "\\" +
+                ", username=" + username + "\\" +
+                ", password='" + password + "\\" +
+                ", age=" + age +
+                ", roles=" + roles +
                 "}";
     }
 
@@ -149,16 +164,12 @@ public class User implements UserDetails {
             return false;
         } else {
             User user = (User) o;
-            return Objects.equals(id, user.id) && Objects.equals(username, user.username)
-                    && Objects.equals(lastName, user.lastName)
-                    && Objects.equals(password, user.password)
-                    && Objects.equals(year, user.year)
-                    && Objects.equals(roles, user.roles);
+            return Objects.equals(id, user.id) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(age, user.age) && Objects.equals(roles, user.roles);
         }
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, lastName, password, year, roles);
+        return Objects.hash(id, firstName, lastName, username, password, age, roles);
     }
 }

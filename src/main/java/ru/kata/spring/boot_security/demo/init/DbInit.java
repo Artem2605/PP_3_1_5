@@ -35,13 +35,13 @@ public class DbInit {
         };
         ROLE_SERVICE_IMPL.saveRole(roleOfAdmin);
         ROLE_SERVICE_IMPL.saveRole(roleOfUser);
-        User user1 = new User("admin", "admin", "admin",
+        User user1 = new User("admin@mail.ru", "admin", "admin", "admin",
                 Long.valueOf("777"), listOfRoles);
         USER_SERVICE_IMPL.saveUser(user1);
-        User user2 = new User("ivan", "ivanov", "ivan",
+        User user2 = new User("ivan@mail.ru", "ivan", "ivanov", "ivan",
                 Long.valueOf("2000"), listOfRoles);
         USER_SERVICE_IMPL.saveUser(user2);
-        User user3 = new User("vasya", "vasilyev", "vasya",
+        User user3 = new User("vasya@mail.ru", "vasya", "vasilyev", "vasya",
                 Long.valueOf("1995"), Collections.singletonList(roleOfUser));
         USER_SERVICE_IMPL.saveUser(user3);
     }

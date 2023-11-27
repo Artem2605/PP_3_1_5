@@ -13,6 +13,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Collections;
 
 @Controller
@@ -28,9 +29,11 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String goAdminPageListOfUsers(Model model) {
+    public String goAdminPageListOfUsers(Principal principal, Model model) {
+        model.addAttribute("entryUser", USER_SERVICE_IMPL.findByUsername(principal.getName()));
         model.addAttribute("allUsers", USER_SERVICE_IMPL.getListOfUsers());
-        return "allUsers";
+        model.addAttribute("user", new User());
+        return "temp";
     }
 
     @GetMapping("/admin/new")
@@ -61,17 +64,28 @@ public class AdminController {
         return "update";
     }
 
-    @PostMapping("/admin/updateUser")
-    public String updateUser(@ModelAttribute("user") @Valid User user,
+//    @PostMapping("/admin/updateUser")
+//    public String updateUser(@ModelAttribute("user") @Valid User user,
+//                             BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return "update";
+//        } else {
+//            ROLE_SERVICE_IMPL.saveRole(user.getRoles().get(0));
+//            USER_SERVICE_IMPL.updateUser(user);
+//            return "redirect:/admin";
+//        }
+//    }
+@PostMapping("/admin/updateUser")
+public String updateUser(@ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "update";
+      if (bindingResult.hasErrors()) {
+            return "temp";
         } else {
             ROLE_SERVICE_IMPL.saveRole(user.getRoles().get(0));
             USER_SERVICE_IMPL.updateUser(user);
             return "redirect:/admin";
         }
-    }
+}
 
     @GetMapping("/admin/delete")
     public String getUserForDelete(@RequestParam(value = "id") Long id,
