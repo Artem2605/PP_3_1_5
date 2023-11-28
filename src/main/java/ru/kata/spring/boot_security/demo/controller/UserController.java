@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/user")
     public String goUserPage(Principal principal, Model model) {
-        model.addAttribute("user", USER_SERVICE_IMPL.findByUsername(principal.getName()));
-        return "user";
+        model.addAttribute("entryUser", USER_SERVICE_IMPL.findByUsername(principal.getName()));
+        return "userPage";
     }
 }

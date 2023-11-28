@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.Objects;
@@ -15,7 +14,7 @@ public class Role implements GrantedAuthority {
     private Long id;
 
     @Column(name = "name")
-    @Pattern(regexp = "ROLE_ADMIN|ROLE_USER", message = "ROLE_ADMIN или ROLE_USER")
+    @Pattern(regexp = "ADMIN|USER", message = "ADMIN или USER")
     private String name;
 
     public Role() {
@@ -50,7 +49,7 @@ public class Role implements GrantedAuthority {
     public String toString() {
         return "Role{" +
                 "id = " + id +
-                ", name = " + name + "\\" +
+                ", name = " + name +
                 "}";
     }
 

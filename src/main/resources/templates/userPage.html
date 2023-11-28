@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Пользователь</title>
+
+    <!-- Bootstrap CSS (jsDelivr CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- Bootstrap Bundle JS (jsDelivr CDN) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+</head>
+
+<body style="background: #f0f0f0">
+<div>
+
+    <!--ШАПКА САЙТА-->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">
+                <span style="font-weight: bold" th:text="${entryUser.username}"/>
+                <span>with roles:</span>
+                <span class="navbar-brand" style="margin: 1%" th:each="role : ${entryUser.roles}"
+                      th:text="${role.name}"/>
+            </a>
+            <a class="navbar-brand" style="color: grey" th:href="@{/logout}">Logout</a>
+        </div>
+    </nav>
+
+    <!--ЛЕВОЕ МЕНЮ-->
+    <div>
+        <div class="d-flex align-items-start">
+            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical"
+                 style="width: 25%; background: white; height: 100vh">
+                <a class="nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile"
+                   role="tab" aria-controls="v-pills-profile" aria-selected="true">User</a>
+            </div>
+            <div class="tab-content" id="v-pills-tabContent" style="width: 90%">
+                <!--РАЗДЕЛ БОКОВОГО МЕНЮ USER-->
+                <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
+                     aria-labelledby="v-pills-profile-tab">
+                    <!--ЗДЕСЬ ДОЛЖНА БЫТЬ КАРТА ЮЗЕРА-->
+                    <p class="h1">User information-page</p>
+                    <div style="border: 1px solid #e5e5e5; width: 99%; background: white">
+                        <div style="background: #f6f6f6; border: 1px solid #e5e5e5">
+                            <p class="h4" style="margin: 1%">About user</p></div>
+                        <!--ЗДЕСЬ БУДЕТ ТАБЛИЦА ИЗ ОДНОЙ СТРОКИ-->
+                        <div style="margin: 2%">
+                            <table class="table table-striped" style="border-top: 1px solid #f6f6f6">
+                                <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">First Name</th>
+                                    <th scope="col">Last Name</th>
+                                    <th scope="col">Age</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Role</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row" th:text="${entryUser.id}"/>
+                                    <td th:text="${entryUser.firstName}"/>
+                                    <td th:text="${entryUser.lastName}"/>
+                                    <td th:text="${entryUser.age}"/>
+                                    <td th:text="${entryUser.username}"/>
+                                    <td>
+                                        <span style="margin: 1%" th:each="role : ${entryUser.roles}"
+                                              th:text="${role.name}"/>
+                                    </td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> <!--от tab контента-->
+            </div> <!--от бокового меню-->
+        </div> <!--от общей страницы-->
+</body>
+</html>

@@ -3,7 +3,6 @@ package ru.kata.spring.boot_security.demo.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -20,7 +19,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "firstName", unique = true)
+    @Column(name = "firstName")
     @Pattern(regexp = "[A-Za-zА-Яа-яЁё]+", message = "Неверно указано имя")
     private String firstName;
 
@@ -28,7 +27,7 @@ public class User implements UserDetails {
     @Pattern(regexp = "[A-Za-zА-Яа-яЁё]+", message = "Неверно указана фамилия")
     private String lastName;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     @Email(message = "Неверно указана почта")
     private String username;
 
@@ -147,10 +146,10 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", firstName=" + firstName + "\\" +
-                ", lastName=" + lastName + "\\" +
-                ", username=" + username + "\\" +
-                ", password='" + password + "\\" +
+                ", firstName=" + firstName +
+                ", lastName=" + lastName +
+                ", username=" + username +
+                ", password='" + password +
                 ", age=" + age +
                 ", roles=" + roles +
                 "}";

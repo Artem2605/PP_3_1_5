@@ -25,8 +25,8 @@ public class DbInit {
 
     @PostConstruct
     private void postConstruct() {
-        Role roleOfAdmin = new Role("ROLE_ADMIN");
-        Role roleOfUser = new Role("ROLE_USER");
+        Role roleOfAdmin = new Role("ADMIN");
+        Role roleOfUser = new Role("USER");
         List<Role> listOfRoles = new ArrayList<>() {
             {
                 add(roleOfAdmin);
@@ -39,10 +39,10 @@ public class DbInit {
                 Long.valueOf("777"), listOfRoles);
         USER_SERVICE_IMPL.saveUser(user1);
         User user2 = new User("ivan@mail.ru", "ivan", "ivanov", "ivan",
-                Long.valueOf("2000"), listOfRoles);
+                Long.valueOf("20"), listOfRoles);
         USER_SERVICE_IMPL.saveUser(user2);
-        User user3 = new User("vasya@mail.ru", "vasya", "vasilyev", "vasya",
-                Long.valueOf("1995"), Collections.singletonList(roleOfUser));
+        User user3 = new User("user@mail.ru", "vasya", "vasilyev", "user",
+                Long.valueOf("20"), Collections.singletonList(roleOfUser));
         USER_SERVICE_IMPL.saveUser(user3);
     }
 }
