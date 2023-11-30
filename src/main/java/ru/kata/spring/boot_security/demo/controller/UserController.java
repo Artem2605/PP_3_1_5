@@ -11,7 +11,6 @@ import java.security.Principal;
 public class UserController {
 
     private final UserServiceImpl userService;
-    //
 
     @Autowired
     public UserController(UserServiceImpl userService) {
