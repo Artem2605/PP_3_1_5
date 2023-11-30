@@ -17,20 +17,20 @@ import java.security.Principal;
 @Controller
 public class AdminController {
 
-    private final UserServiceImpl USER_SERVICE_IMPL;
-    private final RoleServiceImpl ROLE_SERVICE_IMPL;
+    private final UserServiceImpl userService;
+    private final RoleServiceImpl roleService;
 
     @Autowired
-    public AdminController(UserServiceImpl userServiceImpl, RoleServiceImpl roleServiceImpl) {
-        this.USER_SERVICE_IMPL = userServiceImpl;
-        this.ROLE_SERVICE_IMPL = roleServiceImpl;
+    public AdminController(UserServiceImpl userService, RoleServiceImpl roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/admin")
     public String goAdminPageListOfUsers(Principal principal, Model model) {
-        model.addAttribute("entryUser", USER_SERVICE_IMPL.findByUsername(principal.getName()));
-        model.addAttribute("allUsers", USER_SERVICE_IMPL.getListOfUsers());
-        model.addAttribute("allRoles", ROLE_SERVICE_IMPL.getListOfRoles());
+        model.addAttribute("entryUser", userService.findByUsername(principal.getName()));
+        model.addAttribute("allUsers", userService.getListOfUsers());
+        model.addAttribute("allRoles", roleService.getListOfRoles());
         model.addAttribute("newUser", new User());
         return "adminPage";
     }
@@ -39,7 +39,7 @@ public class AdminController {
     public String createUser(@ModelAttribute("newUser") @Valid User user,
                              BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            USER_SERVICE_IMPL.saveUser(user);
+            userService.saveUser(user);
         }
         return "redirect:/admin";
     }
@@ -48,14 +48,14 @@ public class AdminController {
     public String updateUser(@ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            USER_SERVICE_IMPL.updateUser(user);
+            userService.updateUser(user);
         }
         return "redirect:/admin";
     }
 
     @PostMapping("/admin/deleteUser")
     public String deleteUser(@RequestParam(value = "id") Long id) {
-        USER_SERVICE_IMPL.deleteUserById(id);
+        userService.deleteUserById(id);
         return "redirect:/admin";
     }
 }

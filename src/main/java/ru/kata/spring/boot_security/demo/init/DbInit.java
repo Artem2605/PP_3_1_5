@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.init;
+/*package ru.kata.spring.boot_security.demo.init;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,13 +14,13 @@ import java.util.List;
 @Component
 public class DbInit {
 
-    private final UserServiceImpl USER_SERVICE_IMPL;
-    private final RoleServiceImpl ROLE_SERVICE_IMPL;
+    private final UserServiceImpl userService;
+    private final RoleServiceImpl roleService;
 
     @Autowired
     public DbInit(UserServiceImpl userService, RoleServiceImpl roleService) {
-        this.USER_SERVICE_IMPL = userService;
-        this.ROLE_SERVICE_IMPL = roleService;
+        this.userService = userService;
+        this.roleService = roleService;
     }
 
     @PostConstruct
@@ -33,16 +33,16 @@ public class DbInit {
                 add(roleOfUser);
             }
         };
-        ROLE_SERVICE_IMPL.saveRole(roleOfAdmin);
-        ROLE_SERVICE_IMPL.saveRole(roleOfUser);
+        roleService.saveRole(roleOfAdmin);
+        roleService.saveRole(roleOfUser);
         User user1 = new User("admin@mail.ru", "admin", "admin", "admin",
                 Long.valueOf("777"), listOfRoles);
-        USER_SERVICE_IMPL.saveUser(user1);
+        userService.saveUser(user1);
         User user2 = new User("ivan@mail.ru", "ivan", "ivanov", "ivan",
                 Long.valueOf("20"), listOfRoles);
-        USER_SERVICE_IMPL.saveUser(user2);
+        userService.saveUser(user2);
         User user3 = new User("user@mail.ru", "vasya", "vasilyev", "user",
                 Long.valueOf("20"), Collections.singletonList(roleOfUser));
-        USER_SERVICE_IMPL.saveUser(user3);
+        userService.saveUser(user3);
     }
-}
+}*/
