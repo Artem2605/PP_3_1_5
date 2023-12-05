@@ -55,7 +55,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     @Transactional(readOnly = true)
     public User getUserById(Long id) {
-        return userRepository.getOne(id);
+        try {
+            return userRepository.findById(id).orElse(null);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("User not found!");
+        }
     }
 
     @Override

@@ -4,6 +4,6 @@
 3. login: ivan@mail.ru </br> password: ivan </br>
 
 # Задание:
-1. Изменить страницы вашего приложения в соответствии со скриншотами, используя Bootstrap. </br>
-Ссылки: https://drive.google.com/file/d/1g32R1BmNASW5MRcLtwJWTn6ZROTMOVGJ/ </br>
-https://bootstrap-4.ru/docs/4.3.1/getting-started/introduction/ </br>
+1. Написать Rest-контроллеры для вашего приложения. </br>
+2. Переписать вывод (заполнение) таблицы, модальных окон и т.д. на JS c помощью Fetch API, допускается использование JQuery. </br>
+3. При любых изменениях данных страница приложения не должна перезагружаться!
