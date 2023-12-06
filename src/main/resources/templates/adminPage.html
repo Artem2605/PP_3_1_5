@@ -18,6 +18,11 @@
     window.addEventListener('DOMContentLoaded', getAllUsers);
 
     async function createUser() {
+        document.getElementById('newUsername').style.borderColor = "#e5e5e5";
+        document.getElementById('newAge').style.borderColor = "#e5e5e5";
+        document.getElementById('newPassword').style.borderColor = "#e5e5e5";
+        document.getElementById('newFirstName').style.borderColor = "#e5e5e5";
+        document.getElementById('newLastName').style.borderColor = "#e5e5e5";
         const inputFirstName = document.getElementById('userFirstName');
         const firstName = inputFirstName.value;
         const inputLastName = document.getElementById('userLastName');
@@ -129,6 +134,11 @@
     }
 
     async function updateUser() {
+        document.getElementById('divEditUsername').style.borderColor = "#e5e5e5";
+        document.getElementById('divEditAge').style.borderColor = "#e5e5e5";
+        document.getElementById('divEditPassword').style.borderColor = "#e5e5e5";
+        document.getElementById('divEditFirstName').style.borderColor = "#e5e5e5";
+        document.getElementById('divEditLastName').style.borderColor = "#e5e5e5";
         const id = document.getElementById('inputEditID').value;
         const firstName = document.getElementById('inputEditFirstName').value;
         const lastName = document.getElementById('inputEditLastName').value;
@@ -157,7 +167,6 @@
         if (!validateMail(username)) {
             validate = false;
             document.getElementById('divEditUsername').style.borderColor = "red";
-            inputUsername.value = '';
         }
         if (age < 1 || age > 2023) {
             validate = false;
